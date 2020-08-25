@@ -1,18 +1,21 @@
 # task-widget
-# About
-(TODO) Widget that shows what you are supposed to work on.
+## About
+Widget that shows what you are supposed to work on.
 
 ## Features
-# Task widget
-# Task categories
-# Task duration (optional)
+- Task widget
+- Task categories
+- Task duration (optional)
 
 
 ## TODO
-[] Widget window
+[x] Widget window
 [] Hide/show main window
-[] Database (?)
-[] Add category
-[] Add task
-[] Edit category/task
+[] Categories as list
+[] Database (?) or store data in json file
+[] Add category()
+[] Add task()
+[] Edit category/task()
 [] Design
+
+
