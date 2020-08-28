@@ -7,7 +7,7 @@ Widget to help you remember and show what you are supposed to work on.
 - Task categories
 - Task duration (optional)
 
-##TODO
+## TODO
 - Widget window []
 -- Set current task
 -- Set next task
