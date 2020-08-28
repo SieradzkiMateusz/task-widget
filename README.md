@@ -1,6 +1,6 @@
 # task-widget
 ## About
-Widget that shows what you are supposed to work on.
+Widget to help you remember and show what you are supposed to work on.
 
 ## Features
 - Task widget
@@ -9,13 +9,13 @@ Widget that shows what you are supposed to work on.
 
 
 ## TODO
-[x] Widget window
-[] Hide/show main window
-[] Categories as list
-[] Database (?) or store data in json file
-[] Add category()
-[] Add task()
-[] Edit category/task()
-[] Design
+- Widget window [x]    
+- Hide/show main window/widget []    
+- Categories as list []
+- Database (?) or store data in json file []
+- Add category() []
+- Add task() []
+- Edit category/task() []
+- Design []
 
 

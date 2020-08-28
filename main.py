@@ -9,8 +9,7 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         self.setupUi(self)
 
 
-# Widget class for now
-class Task_widget(widget.Ui_Form, QWidget):
+class TaskWidget(widget.Ui_Form, QWidget):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -19,9 +18,7 @@ class Task_widget(widget.Ui_Form, QWidget):
 app = QApplication(sys.argv)
 
 window = MainWindow()
-widget_window = Task_widget()
 window.show()
-widget_window.show()
 
 app.exec_()
 
