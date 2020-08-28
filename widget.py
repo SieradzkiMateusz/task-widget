@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'widget.ui'
+## Form generated from reading UI file 'widget_window.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.0
 ##
@@ -16,66 +16,58 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtWidgets import *
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        if not Form.objectName():
-            Form.setObjectName(u"Form")
-        Form.resize(339, 69)
-        self.horizontalLayout = QHBoxLayout(Form)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.frame = QFrame(Form)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        if not MainWindow.objectName():
+            MainWindow.setObjectName(u"MainWindow")
+        MainWindow.resize(335, 80)
+        self.centralwidget = QWidget(MainWindow)
+        self.centralwidget.setObjectName(u"centralwidget")
+        self.gridLayout = QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.gridLayout = QGridLayout(self.frame)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.label = QLabel(self.frame)
-        self.label.setObjectName(u"label")
-        self.label.setMinimumSize(QSize(230, 0))
-        self.label.setMaximumSize(QSize(5000, 16777215))
+        self.gridLayout_2 = QGridLayout(self.frame)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.task_name = QLabel(self.frame)
+        self.task_name.setObjectName(u"task_name")
+
+        self.gridLayout_2.addWidget(self.task_name, 0, 0, 3, 2)
+
+        self.add_task = QPushButton(self.frame)
+        self.add_task.setObjectName(u"add_task")
         font = QFont()
-        font.setPointSize(16)
-        self.label.setFont(font)
-        self.label.setStyleSheet(u"background-color: lightgreen;")
+        font.setPointSize(7)
+        self.add_task.setFont(font)
 
-        self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.add_task, 0, 2, 2, 1)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(202, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout.addItem(self.horizontalSpacer, 1, 1, 1, 1)
+        self.gridLayout_2.addItem(self.horizontalSpacer, 1, 1, 2, 1)
 
-        self.pushButton = QPushButton(self.frame)
-        self.pushButton.setObjectName(u"pushButton")
-        icon = QIcon()
-        icon.addFile(u":/images/hide_button.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon)
-        self.pushButton.setAutoRepeat(False)
+        self.completed = QPushButton(self.frame)
+        self.completed.setObjectName(u"completed")
+        self.completed.setFont(font)
 
-        self.gridLayout.addWidget(self.pushButton, 1, 3, 1, 1)
-
-        self.pushButton_2 = QPushButton(self.frame)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setMaximumSize(QSize(25, 25))
-
-        self.gridLayout.addWidget(self.pushButton_2, 1, 2, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout.addItem(self.verticalSpacer, 2, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.completed, 2, 2, 1, 1)
 
 
-        self.horizontalLayout.addWidget(self.frame)
+        self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
+        MainWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(Form)
+        self.retranslateUi(MainWindow)
 
-        QMetaObject.connectSlotsByName(Form)
+        QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Form", u"Task_name", None))
-        self.pushButton.setText("")
-        self.pushButton_2.setText(QCoreApplication.translate("Form", u"X", None))
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.task_name.setText(QCoreApplication.translate("MainWindow", u"No task", None))
+        self.add_task.setText(QCoreApplication.translate("MainWindow", u"Add task", None))
+        self.completed.setText(QCoreApplication.translate("MainWindow", u"Completed", None))
     # retranslateUi
 
