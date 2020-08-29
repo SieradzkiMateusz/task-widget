@@ -1,5 +1,5 @@
 import sys
-from PySide2.QtWidgets import QMainWindow, QApplication, QDialog
+from PySide2.QtWidgets import QMainWindow, QApplication, QDialog, QMessageBox
 from PySide2.QtCore import Qt
 from widget import Ui_MainWindow
 from taskDialog import Ui_Dialog
@@ -20,7 +20,8 @@ class taskDialog(Ui_Dialog, QDialog):
         try:
             taskFile = open("tasks.txt", "a") 
         except:
-            print("Couldn't open file")
+            flags = QMessageBox.Abort
+            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
             return 0
 
         task = self.ui.taskName.toPlainText()
@@ -59,11 +60,19 @@ class MainWindow(QMainWindow):
         self.updateTask()
 
     def updateTask(self):
-        taskFile = open("tasks.txt", "r")
+        try:
+            taskFile = open("tasks.txt", "r") 
+        except:
+            flags = QMessageBox.Abort
+            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
+            return 0
 
         firstTask = taskFile.read()
         firstTask = firstTask.split('\n', 1)[0]
-        self.ui.task_name.setText(firstTask)
+        if firstTask:
+            self.ui.task_name.setText(firstTask)
+        else:
+            self.ui.task_name.setText("No task")
 
         taskFile.close()
 
@@ -72,7 +81,13 @@ class MainWindow(QMainWindow):
 
     def completeTask(self):
         # Read tasks currently in file and append them to empty list
-        taskFile = open("tasks.txt", "r")
+        try:
+            taskFile = open("tasks.txt", "r") 
+        except:
+            flags = QMessageBox.Abort
+            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
+            return 0
+
         tasks = taskFile.read()
         newTasks = []
         for task in tasks.split('\n')[1:-1]:
@@ -82,7 +97,13 @@ class MainWindow(QMainWindow):
         taskFile.close()
 
         # Rewrite file without the completed task
-        taskFile = open("tasks.txt", "w")
+        try:
+            taskFile = open("tasks.txt", "w") 
+        except:
+            flags = QMessageBox.Abort
+            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
+            return 0
+       
         for task in newTasks:
             print("Adding task: {}".format(task))
             taskFile.write(task + '\n')

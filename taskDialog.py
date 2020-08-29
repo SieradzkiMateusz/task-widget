@@ -20,7 +20,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(263, 138)
+        Dialog.resize(263, 113)
         self.gridLayout = QGridLayout(Dialog)
         self.gridLayout.setObjectName(u"gridLayout")
         self.frame = QFrame(Dialog)
@@ -31,6 +31,7 @@ class Ui_Dialog(object):
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.taskName = QPlainTextEdit(self.frame)
         self.taskName.setObjectName(u"taskName")
+        self.taskName.setMaximumSize(QSize(250, 45))
 
         self.gridLayout_2.addWidget(self.taskName, 0, 0, 1, 1)
 

@@ -4,14 +4,15 @@ Widget to help you remember and show what you are supposed to work on.
 
 ## Features
 - Task widget
-- Task categories
-- Task duration (optional)
+- Task cateogies
 
 ## Roadmap
 - Task input validation
 - Add database support
 - Add categories
-- Add timer
+- Task duration / deadline
+- Design
+- Deployment
 
 ## TODO
 - Widget window [x]
@@ -23,5 +24,3 @@ Widget to help you remember and show what you are supposed to work on.
 if completed:
 	delete current task [x]
 	switch to next task [x]
-- Hide/show main window/widget []    
-- Design []
