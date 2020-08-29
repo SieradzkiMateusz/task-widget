@@ -13,15 +13,15 @@ Widget to help you remember and show what you are supposed to work on.
 - Add categories
 - Add timer
 
-##TODO
+## TODO
 - Widget window [x]
 - Task dialog [x]
 - Show dialog from widget [x]
 - Save task in text file [x]
 - Set current task [x]
-- Complete task []
+- Complete task [x]
 if completed:
-	delete current task
-	switch to next task 
+	delete current task [x]
+	switch to next task [x]
 - Hide/show main window/widget []    
 - Design []
