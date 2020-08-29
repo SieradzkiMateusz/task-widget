@@ -29,10 +29,10 @@ class Ui_Dialog(object):
         self.frame.setFrameShadow(QFrame.Raised)
         self.gridLayout_2 = QGridLayout(self.frame)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.plainTextEdit = QPlainTextEdit(self.frame)
-        self.plainTextEdit.setObjectName(u"plainTextEdit")
+        self.taskName = QPlainTextEdit(self.frame)
+        self.taskName.setObjectName(u"taskName")
 
-        self.gridLayout_2.addWidget(self.plainTextEdit, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.taskName, 0, 0, 1, 1)
 
         self.buttonBox = QDialogButtonBox(self.frame)
         self.buttonBox.setObjectName(u"buttonBox")

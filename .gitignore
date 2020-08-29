@@ -133,3 +133,6 @@ dmypy.json
 
 #QT
 *.ui
+
+#Development files
+tasks.txt
