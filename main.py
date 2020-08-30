@@ -1,6 +1,7 @@
 import sys
 from PySide2.QtWidgets import QMainWindow, QApplication, QDialog, QMessageBox
-from PySide2.QtCore import Qt
+from PySide2.QtGui import QRegExpValidator 
+from PySide2.QtCore import QRegExp
 from widget import Ui_MainWindow
 from taskDialog import Ui_Dialog
 
@@ -24,14 +25,18 @@ class taskDialog(Ui_Dialog, QDialog):
             result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
             return 0
 
-        task = self.ui.taskName.toPlainText()
-        task = task.split('\n', 1)[0]
+        # Input validation
+        rx = QRegExp("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$")
+        validator = QRegExpValidator(rx, self)
+        self.ui.taskName.setValidator(validator)
 
-        if task:
-            print("Task name: {}".format(task))
+        if self.ui.taskName.hasAcceptableInput():
+            task = self.ui.taskName.text()
+            task = task.split('\n', 1)[0]
             taskFile.write(task + '\n')
         else:
-            print("Enter task name!")
+            flags = QMessageBox.Close
+            result = QMessageBox.warning(self, "Error", "Invalid input!", flags)
 
         taskFile.close()
 
@@ -76,9 +81,6 @@ class MainWindow(QMainWindow):
 
         taskFile.close()
 
-        # DEBUG
-        # print("Current task name: {}".format(self.ui.task_name.text()))
-
     def completeTask(self):
         # Read tasks currently in file and append them to empty list
         try:
@@ -91,7 +93,6 @@ class MainWindow(QMainWindow):
         tasks = taskFile.read()
         newTasks = []
         for task in tasks.split('\n')[1:-1]:
-            print("Appending task: {}".format(task))
             newTasks.append(task)
 
         taskFile.close()
@@ -105,7 +106,6 @@ class MainWindow(QMainWindow):
             return 0
        
         for task in newTasks:
-            print("Adding task: {}".format(task))
             taskFile.write(task + '\n')
 
         taskFile.close()
