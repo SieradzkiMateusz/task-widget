@@ -1,8 +1,9 @@
 import logging
-from PySide2.QtCore import Qt, Slot, QDir
+from PySide2.QtCore import Qt, Slot, QDir, QFile
 from PySide2.QtSql import QSqlDatabase, QSqlQuery, QSqlRecord, QSqlTableModel
 
 table_name = "Tasks"
+
 
 def createTable():
     if table_name in QSqlDatabase.database().tables():
@@ -18,7 +19,7 @@ def createTable():
                 )
                 """
             ):
-         logging.error("Failed to query database")
+        logging.error("Failed to query database")
 
     logging.info(query)
 
@@ -33,7 +34,33 @@ class SqlTaskModel(QSqlTableModel):
 
         self.select()
         logging.debug("Table was loaded successfully.")
-        
+
+    def insert(self, data):
+        new_record = self.record()
+        new_record.setValue("title", data['title'])
+        new_record.setValue("status", 0)
+
+        if not self.insertRecord(self.rowCount(), new_record):
+            logging.error("Failed to insert data.")
+
+        self.submitAll()
+        self.select()
+
+    def getTask(self):
+        q = QSqlQuery("SELECT * FROM Tasks WHERE status is 0 LIMIT 1")
+        q.first()
+        rec = q.record()
+
+        titleCol = rec.indexOf("title")
+        idCol = rec.indexOf("id")
+
+        return q.value(idCol), q.value(titleCol)
+
+    def updateTaskStatus(self, taskID):
+        query = QSqlQuery()
+        query.prepare("UPDATE Tasks SET status=1 WHERE id=:id")
+        query.bindValue(':id', taskID)
+        query.exec_()
 
 logging.basicConfig(filename='tasks.log', level=logging.DEBUG)
 logger = logging.getLogger("logger")

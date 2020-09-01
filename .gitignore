@@ -139,3 +139,6 @@ dmypy.json
 
 # Development files
 tasks.txt
+
+# VSCode files
+.vscode/settings.json

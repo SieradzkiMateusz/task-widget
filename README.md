@@ -8,7 +8,7 @@ Widget to help you remember and show what you are supposed to work on.
 
 ## Roadmap
 - Task input validation [x]
-- Add database support
+- Add database support [x]
 - Add categories
 - Task duration / deadline
 - Design
@@ -18,4 +18,7 @@ Widget to help you remember and show what you are supposed to work on.
 - Task input validation [x]
 - Create database model [x]
 - Connect database [x]
-- Replace text file and functions with database counterparts
+- Insert task data into database [x]
+- Retrieve task data from database [x]
+- Set first not completed task as current [x]
+- Complete task functionality [x]
