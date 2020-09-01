@@ -4,6 +4,7 @@ from PySide2.QtGui import QRegExpValidator
 from PySide2.QtCore import QRegExp
 from widget import Ui_MainWindow
 from taskDialog import Ui_Dialog
+import sqlHelper
 
 
 class taskDialog(Ui_Dialog, QDialog):
@@ -18,13 +19,6 @@ class taskDialog(Ui_Dialog, QDialog):
         self.ui.buttonBox.accepted.connect(self.addTask)
 
     def addTask(self):
-        try:
-            taskFile = open("tasks.txt", "a") 
-        except:
-            flags = QMessageBox.Abort
-            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
-            return 0
-
         # Input validation
         rx = QRegExp("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$")
         validator = QRegExpValidator(rx, self)
@@ -33,12 +27,14 @@ class taskDialog(Ui_Dialog, QDialog):
         if self.ui.taskName.hasAcceptableInput():
             task = self.ui.taskName.text()
             task = task.split('\n', 1)[0]
-            taskFile.write(task + '\n')
+
+            # Database code
+            data = {'title': task}
+
+            sql_task_model.insert(data)
         else:
             flags = QMessageBox.Close
             result = QMessageBox.warning(self, "Error", "Invalid input!", flags)
-
-        taskFile.close()
 
 
 class MainWindow(QMainWindow):
@@ -65,56 +61,25 @@ class MainWindow(QMainWindow):
         self.updateTask()
 
     def updateTask(self):
-        try:
-            taskFile = open("tasks.txt", "r") 
-        except:
-            flags = QMessageBox.Abort
-            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
-            return 0
-
-        firstTask = taskFile.read()
-        firstTask = firstTask.split('\n', 1)[0]
+        _, firstTask = sql_task_model.getTask()
         if firstTask:
             self.ui.task_name.setText(firstTask)
         else:
             self.ui.task_name.setText("No task")
 
-        taskFile.close()
-
     def completeTask(self):
-        # Read tasks currently in file and append them to empty list
-        try:
-            taskFile = open("tasks.txt", "r") 
-        except:
-            flags = QMessageBox.Abort
-            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
-            return 0
-
-        tasks = taskFile.read()
-        newTasks = []
-        for task in tasks.split('\n')[1:-1]:
-            newTasks.append(task)
-
-        taskFile.close()
-
-        # Rewrite file without the completed task
-        try:
-            taskFile = open("tasks.txt", "w") 
-        except:
-            flags = QMessageBox.Abort
-            result = QMessageBox.critical(self, "Error", "Could not open a file", flags)
-            return 0
-       
-        for task in newTasks:
-            taskFile.write(task + '\n')
-
-        taskFile.close()
+        taskID, _ = sql_task_model.getTask()
+        sql_task_model.updateTaskStatus(taskID)
         self.updateTask()
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
+    # Database setup
+    sqlHelper.connectToDatabase()
+    sql_task_model = sqlHelper.SqlTaskModel()
+
+    # Window setup
     window = MainWindow()
     window.show()
 
