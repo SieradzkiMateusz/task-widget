@@ -7,7 +7,7 @@ Widget to help you remember and show what you are supposed to work on.
 - Task cateogies
 
 ## Roadmap
-- Task input validation
+- Task input validation [x]
 - Add database support
 - Add categories
 - Task duration / deadline
@@ -16,6 +16,6 @@ Widget to help you remember and show what you are supposed to work on.
 
 ## TODO
 - Task input validation [x]
-- Database design
-- Connect database
-- Replace text file and functions with database
+- Create database model [x]
+- Connect database [x]
+- Replace text file and functions with database counterparts

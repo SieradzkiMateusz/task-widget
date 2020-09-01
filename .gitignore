@@ -131,8 +131,11 @@ dmypy.json
 # Swap
 *.swp
 
-#QT
+# QT
 *.ui
 
-#Development files
+# Database
+*.sqlite3
+
+# Development files
 tasks.txt

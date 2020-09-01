@@ -4,6 +4,7 @@ from PySide2.QtGui import QRegExpValidator
 from PySide2.QtCore import QRegExp
 from widget import Ui_MainWindow
 from taskDialog import Ui_Dialog
+import sqlHelper
 
 
 class taskDialog(Ui_Dialog, QDialog):
@@ -115,8 +116,13 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
+    # Window setup
     window = MainWindow()
     window.show()
+
+    # Database setup
+    sqlHelper.connectToDatabase()
+    sql_task_model = sqlHelper.SqlTaskModel()
 
     sys.exit(app.exec_())
 
