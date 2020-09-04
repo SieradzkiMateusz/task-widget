@@ -50,10 +50,25 @@ class categoryWindow(Ui_Form, QWidget):
         self.showCategories()
 
     def showCategories(self):
-        self.ui.category_3 = QPushButton(self.ui.frame)
-        self.ui.category_3.setObjectName(u"category_3")
-        self.ui.category_3.setMinimumSize(QSize(160, 40))
-        self.ui.gridLayout_2.addWidget(self.ui.category_3, 4, 0, 1, 1)
+        categories = sql_category_model.getCategories()
+
+        # Dynamically create category button and add it to the layout
+        self.ui.categories = []
+        lastPos = 1
+        for i, category in enumerate(categories):
+            title = categories[i]['title']
+            color = categories[i]['color']
+            self.ui.categories.append(QPushButton(self.ui.frame))
+            self.ui.categories[i].setObjectName(f"{title}")
+            self.ui.categories[i].setMinimumSize(QSize(160, 40))
+            self.ui.categories[i].setStyleSheet(f"background-color: {color};")
+            self.ui.categories[i].setText(f"{title}")
+            self.ui.gridLayout_2.addWidget(self.ui.categories[i], i+1, 0, 1, 1)
+
+            # Save free position for 'add new task' button
+            lastPos += 1
+
+        self.ui.gridLayout_2.addWidget(self.ui.add_category, lastPos, 0, 1, 1)
 
 
 class MainWindow(QMainWindow):

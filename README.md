@@ -11,11 +11,12 @@ Widget to help you remember and show what you are supposed to work on.
 - Add database support [x]
 - Add categories
 - Task duration / deadline
-- Design
+- UX/UI Improvements
 - Deployment
 
 ## TODO
 - Design categories window [x]
 - UI Creation [x]
 - Categories database[x]
-- Load categories from database []
+- Get categories from database [x]
+- Dynamically create category buttons and add them to the layout [x]

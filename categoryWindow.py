@@ -20,7 +20,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(335, 300)
+        Form.resize(225, 300)
         self.gridLayout = QGridLayout(Form)
         self.gridLayout.setObjectName(u"gridLayout")
         self.verticalSpacer = QSpacerItem(20, 13, QSizePolicy.Minimum, QSizePolicy.Expanding)
@@ -33,27 +33,6 @@ class Ui_Form(object):
         self.frame.setFrameShadow(QFrame.Raised)
         self.gridLayout_2 = QGridLayout(self.frame)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-
-        # Category
-        self.category_1 = QPushButton(self.frame)
-        self.category_1.setObjectName(u"category_1")
-        self.category_1.setMinimumSize(QSize(160, 40))
-        self.category_1.setStyleSheet(u"* {\n"
-"	background-color: #32a852;\n"
-"	text-align: center;\n"
-"}")
-
-        self.gridLayout_2.addWidget(self.category_1, 1, 0, 1, 1)
-
-        self.category_2 = QPushButton(self.frame)
-        self.category_2.setObjectName(u"category_2")
-        self.category_2.setMinimumSize(QSize(160, 40))
-        self.category_2.setStyleSheet(u"*{\n"
-"	background-color: #9432a8;\n"
-"}")
-
-        self.gridLayout_2.addWidget(self.category_2, 2, 0, 1, 1)
-
         self.add_category = QPushButton(self.frame)
         self.add_category.setObjectName(u"add_category")
         font = QFont()
@@ -62,7 +41,7 @@ class Ui_Form(object):
         font.setWeight(75)
         self.add_category.setFont(font)
 
-        self.gridLayout_2.addWidget(self.add_category, 3, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.add_category, 1, 0, 1, 1)
 
 
         self.gridLayout.addWidget(self.frame, 0, 0, 2, 1)

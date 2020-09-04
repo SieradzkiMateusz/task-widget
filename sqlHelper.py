@@ -2,11 +2,13 @@ import logging
 from PySide2.QtCore import Qt, Slot, QDir, QFile
 from PySide2.QtSql import QSqlDatabase, QSqlQuery, QSqlRecord, QSqlTableModel
 
+# Table names for convinience
 task_table = "tasks"
 category_table = "category" 
 
 
 def createTaskTable():
+    # Don't create if table already exists
     if task_table in QSqlDatabase.database().tables():
         return
 
@@ -27,6 +29,7 @@ def createTaskTable():
     logging.info(query)
 
 def createCategoryTable():
+    # Don't create if table already exists
     if category_table in QSqlDatabase.database().tables():
         return
 
@@ -54,6 +57,7 @@ class SqlTaskModel(QSqlTableModel):
         # logging.debug("Task table was loaded successfully.")
 
     def insert(self, data):
+        # Add new record to the table
         new_record = self.record()
         new_record.setValue("title", data['title'])
         new_record.setValue("status", 0)
@@ -65,7 +69,8 @@ class SqlTaskModel(QSqlTableModel):
         self.select()
 
     def getTask(self):
-        q = QSqlQuery("SELECT * FROM Tasks WHERE status is 0 LIMIT 1")
+        # Get the first uncompleted task
+        q = QSqlQuery("SELECT * FROM tasks WHERE status is 0 LIMIT 1")
         q.first()
         rec = q.record()
 
@@ -75,8 +80,9 @@ class SqlTaskModel(QSqlTableModel):
         return q.value(idCol), q.value(titleCol)
 
     def updateTaskStatus(self, taskID):
+        # Set task status as completed
         query = QSqlQuery()
-        query.prepare("UPDATE Tasks SET status=1 WHERE id=:id")
+        query.prepare("UPDATE tasks SET status=1 WHERE id=:id")
         query.bindValue(':id', taskID)
         query.exec_()
 
@@ -93,6 +99,7 @@ class SqlCategoryModel(QSqlTableModel):
         # logging.debug("Category table loaded successfully.")
         
     def insert(self, data):
+        # Add new record to the table
         new_record = self.record()
         new_record.setValue("title", data['title'])
         new_record.setValue("color", data['color'])
@@ -103,7 +110,25 @@ class SqlCategoryModel(QSqlTableModel):
         self.submitAll()
         self.select()
 
+    def getCategories(self):
+        # Get all categories from database
+        q = QSqlQuery("SELECT * FROM categories")
+        categories = []
+        while (q.next()):
+            rec = q.record()
+            idCol = rec.indexOf("category_id")
+            titleCol = rec.indexOf("title")
+            colorCol = rec.indexOf("color")
 
+            category = {
+                    'catID': q.value(idCol),
+                    'title': q.value(titleCol),
+                    'color': q.value(colorCol)
+            }
+            categories.append(category)
+
+        return categories
+        
 logging.basicConfig(filename='sqlite.log', level=logging.DEBUG)
 logger = logging.getLogger("logger")
 
