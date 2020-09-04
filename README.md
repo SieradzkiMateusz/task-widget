@@ -15,10 +15,7 @@ Widget to help you remember and show what you are supposed to work on.
 - Deployment
 
 ## TODO
-- Task input validation [x]
-- Create database model [x]
-- Connect database [x]
-- Insert task data into database [x]
-- Retrieve task data from database [x]
-- Set first not completed task as current [x]
-- Complete task functionality [x]
+- Design categories window [x]
+- UI Creation [x]
+- Categories database[x]
+- Load categories from database []

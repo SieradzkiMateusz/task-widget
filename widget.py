@@ -20,15 +20,19 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(335, 80)
+        MainWindow.resize(335, 82)
+        MainWindow.setStyleSheet(u"")
+        self.actionQuit = QAction(MainWindow)
+        self.actionQuit.setObjectName(u"actionQuit")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
+        self.frame.setStyleSheet(u"")
+        self.frame.setFrameShape(QFrame.NoFrame)
+        self.frame.setFrameShadow(QFrame.Plain)
         self.gridLayout_2 = QGridLayout(self.frame)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.task_name = QLabel(self.frame)
@@ -54,20 +58,32 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.completed, 2, 2, 1, 1)
 
+        self.show_categories = QPushButton(self.frame)
+        self.show_categories.setObjectName(u"show_categories")
+        self.show_categories.setMaximumSize(QSize(15, 15))
+
+        self.gridLayout_2.addWidget(self.show_categories, 2, 3, 1, 1)
+
 
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
+        self.actionQuit.triggered.connect(MainWindow.close)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.actionQuit.setText(QCoreApplication.translate("MainWindow", u"Quit", None))
+#if QT_CONFIG(shortcut)
+        self.actionQuit.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+Q", None))
+#endif // QT_CONFIG(shortcut)
         self.task_name.setText(QCoreApplication.translate("MainWindow", u"No task", None))
         self.add_task.setText(QCoreApplication.translate("MainWindow", u"Add task", None))
         self.completed.setText(QCoreApplication.translate("MainWindow", u"Completed", None))
+        self.show_categories.setText(QCoreApplication.translate("MainWindow", u"V", None))
     # retranslateUi
 
