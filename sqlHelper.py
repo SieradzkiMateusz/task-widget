@@ -2,7 +2,7 @@ import logging
 from PySide2.QtCore import Qt, Slot, QDir, QFile
 from PySide2.QtSql import QSqlDatabase, QSqlQuery, QSqlRecord, QSqlTableModel
 
-# Table names for convinience
+# Table names for convenience
 task_table = "tasks"
 category_table = "category" 
 
@@ -75,14 +75,14 @@ class SqlTaskModel(QSqlTableModel):
         rec = q.record()
 
         titleCol = rec.indexOf("title")
-        idCol = rec.indexOf("id")
+        idCol = rec.indexOf("task_id")
 
         return q.value(idCol), q.value(titleCol)
 
     def updateTaskStatus(self, taskID):
         # Set task status as completed
         query = QSqlQuery()
-        query.prepare("UPDATE tasks SET status=1 WHERE id=:id")
+        query.prepare("UPDATE tasks SET status=1 WHERE task_id=:id")
         query.bindValue(':id', taskID)
         query.exec_()
 

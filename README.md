@@ -1,6 +1,7 @@
 # task-widget
 ## About
 Widget to help you remember and show what you are supposed to work on.
+First time working with qt/pyside2.
 
 ## Features
 - Task widget
@@ -15,8 +16,8 @@ Widget to help you remember and show what you are supposed to work on.
 - Deployment
 
 ## TODO
-- Design categories window [x]
-- UI Creation [x]
-- Categories database[x]
-- Get categories from database [x]
-- Dynamically create category buttons and add them to the layout [x]
+- Edit category window ui []
+- Show 'edit category' window on click []
+- Edit category functionality []
+- Add new category functionality []
+- Select category in task add window []

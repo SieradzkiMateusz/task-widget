@@ -79,7 +79,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowTitle("Task Widget")
-        self.updateTask()
+        self.updateTaskLabel()
         
         # Set position on screen
         self.move(900, 0)
@@ -97,9 +97,9 @@ class MainWindow(QMainWindow):
     def showDialog(self):
         dialog = taskDialog(self)
         dialog.exec_()
-        self.updateTask()
+        self.updateTaskLabel()
 
-    def updateTask(self):
+    def updateTaskLabel(self):
         _, firstTask = sql_task_model.getTask()
         if firstTask:
             self.ui.task_name.setText(firstTask)
@@ -109,7 +109,7 @@ class MainWindow(QMainWindow):
     def completeTask(self):
         taskID, _ = sql_task_model.getTask()
         sql_task_model.updateTaskStatus(taskID)
-        self.updateTask()
+        self.updateTaskLabel()
 
 
 if __name__ == '__main__':
