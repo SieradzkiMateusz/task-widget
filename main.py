@@ -6,7 +6,9 @@ from widget import Ui_MainWindow
 from taskDialog import Ui_AddTask
 from categoryWindow import Ui_Categories
 from categoryEdit import Ui_CategoryEdit
+from categoryAdd import Ui_CategoryAdd
 import sqlHelper
+from functools import partial
 
 
 class taskDialog(Ui_AddTask, QDialog):
@@ -39,12 +41,66 @@ class taskDialog(Ui_AddTask, QDialog):
 
 
 class categoryEdit(Ui_CategoryEdit, QDialog):
-    def __init__(self, *args, **kwargs):
-        super(categoryEdit, self).__init__(*args, **kwargs)
+    def __init__(self, catID, title, color):
+        super(categoryEdit, self).__init__()
 
-        #UI Setup
+        # UI Setup
         self.ui = Ui_CategoryEdit()
         self.ui.setupUi(self)
+
+        self.catID = catID
+        self.title = title
+        self.color = color
+
+        self.ui.buttonBox.accepted.connect(self.updateCategory)
+        self.ui.catDelete.clicked.connect(self.deleteCategory)
+
+    def updateCategory(self):
+        self.title = self.ui.catName.text()
+        sql_category_model.updateCategory(self.catID, self.title, self.color)
+
+    def pickColor(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.ui.selectColor.setStyleSheet(f"background-color: {color.name()};")
+            self.color = color.name()
+
+    def deleteCategory(self):
+        flags = QMessageBox.Cancel
+        flags |= QMessageBox.Ok
+        result = QMessageBox.warning(self, "Confirm", "Do you really want to delete this category?", flags)
+        if result == 1024:
+            sql_category_model.deleteCategory(self.catID)
+            self.close()
+
+
+class categoryAdd(Ui_CategoryAdd, QDialog):
+    def __init__(self):
+        super(categoryAdd, self).__init__()
+
+        # UI Setup
+        self.ui = Ui_CategoryAdd()
+        self.ui.setupUi(self)
+
+        self.color = "#eeeeee"
+
+        self.ui.buttonBox.accepted.connect(self.addCategory)
+
+    def addCategory(self):
+        title = self.ui.catName.text()
+        data = {
+            'title': title,
+            'color': self.color
+        }
+        print(f"DEBUG: {data['title']} {data['color']}")
+        if title:
+            sql_category_model.insert(data)
+    
+    def pickColor(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.ui.selectColor.setStyleSheet(f"background-color: {color.name()};")
+            self.color = color.name()
 
 
 class categoryWindow(Ui_Categories, QWidget):
@@ -55,14 +111,28 @@ class categoryWindow(Ui_Categories, QWidget):
         self.ui = Ui_Categories()
         self.ui.setupUi(self)
         self.showCategories()
+        
+        self.ui.add_category.clicked.connect(self.showAddCategory)
 
-    def showEditCategory(self, catID):
-        dialog = categoryEdit(self)
-        dialog.ui.catName.setText(str(catID))
-        dialog.show()
+    def showAddCategory(self):
+        dialog = categoryAdd()
+        dialog.ui.selectColor.clicked.connect(dialog.pickColor)
+        dialog.exec_()
+        self.showCategories()
+
+    def showEditCategory(self, catID, catTitle, catColor):
+        dialog = categoryEdit(catID, catTitle, catColor)
+        dialog.ui.catName.setText(str(catTitle))
+        dialog.ui.selectColor.setStyleSheet(f"background-color: {catColor};")
+        dialog.ui.selectColor.clicked.connect(dialog.pickColor)
+        dialog.exec_()
+        self.showCategories()
 
     def showCategories(self):
         categories = sql_category_model.getCategories()
+        # Clear layout
+        for i in reversed(range(self.ui.gridLayout_2.count())):
+            self.ui.gridLayout_2.itemAt(i).widget().setParent(None)
 
         # Dynamically create category button and add it to the layout
         self.ui.categories = []
@@ -71,15 +141,15 @@ class categoryWindow(Ui_Categories, QWidget):
             title = categories[i]['title']
             color = categories[i]['color']
             catID = categories[i]['catID']
+
             self.ui.categories.append(QPushButton(self.ui.frame))
             self.ui.categories[i].setObjectName(f"cat_{title}")
             self.ui.categories[i].setMinimumSize(QSize(160, 40))
             self.ui.categories[i].setStyleSheet(f"background-color: {color};")
             self.ui.categories[i].setText(f"{title}")
 
-            # Using lambda to pass extra arguments
-            # Needs fixing later, I have no idea how to do this now.
-            self.ui.categories[i].clicked.connect(lambda: self.showEditCategory(catID))
+            # Using partial to pass extra arguments
+            self.ui.categories[i].clicked.connect(partial(self.showEditCategory, catID, title, color))
             self.ui.gridLayout_2.addWidget(self.ui.categories[i], i+1, 0, 1, 1)
 
             # Save free position for 'add new category' button

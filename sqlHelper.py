@@ -4,7 +4,7 @@ from PySide2.QtSql import QSqlDatabase, QSqlQuery, QSqlRecord, QSqlTableModel
 
 # Table names for convenience
 task_table = "tasks"
-category_table = "category" 
+category_table = "categories" 
 
 
 def createTaskTable():
@@ -128,6 +128,21 @@ class SqlCategoryModel(QSqlTableModel):
             categories.append(category)
 
         return categories
+
+    def updateCategory(self, catID, newTitle, newColor):
+        query = QSqlQuery()
+        query.prepare("UPDATE categories SET color=:color, title=:title WHERE category_id=:id")
+        query.bindValue(':color', newColor)
+        query.bindValue(':title', newTitle)
+        query.bindValue(':id', catID)
+        query.exec_()
+
+    def deleteCategory(self, catID):
+        query = QSqlQuery()
+        query.prepare("DELETE FROM categories WHERE category_id=:id")
+        query.bindValue(':id', catID)
+        query.exec_()
+            
         
 logging.basicConfig(filename='sqlite.log', level=logging.DEBUG)
 logger = logging.getLogger("logger")

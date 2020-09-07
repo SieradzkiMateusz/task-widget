@@ -18,10 +18,10 @@ First time working with qt/pyside2.
 ## TODO
 - Edit category window ui [x]
 - Show 'edit category' window on click [x]
-- Edit category functionality []
-- Add new category functionality []
-- Add category select to 'add task' window [x]
+- Edit category functionality [x]
+- Color selection and update [x]
+- Update 'categories' window after edit [x]
+- Delete category [x]
+- Add 'new category' functionality [x]
+- Add 'category select' list to 'add task' window [x]
 - Category select functionality []
-
-## BUGS
-- main.py -> showCategories: clicked.connect applies to all buttons instead of one
