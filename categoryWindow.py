@@ -16,18 +16,18 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtWidgets import *
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        if not Form.objectName():
-            Form.setObjectName(u"Form")
-        Form.resize(225, 300)
-        self.gridLayout = QGridLayout(Form)
+class Ui_Categories(object):
+    def setupUi(self, Categories):
+        if not Categories.objectName():
+            Categories.setObjectName(u"Categories")
+        Categories.resize(225, 300)
+        self.gridLayout = QGridLayout(Categories)
         self.gridLayout.setObjectName(u"gridLayout")
         self.verticalSpacer = QSpacerItem(20, 13, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.gridLayout.addItem(self.verticalSpacer, 3, 0, 1, 1)
 
-        self.frame = QFrame(Form)
+        self.frame = QFrame(Categories)
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.NoFrame)
         self.frame.setFrameShadow(QFrame.Raised)
@@ -47,13 +47,13 @@ class Ui_Form(object):
         self.gridLayout.addWidget(self.frame, 0, 0, 2, 1)
 
 
-        self.retranslateUi(Form)
+        self.retranslateUi(Categories)
 
-        QMetaObject.connectSlotsByName(Form)
+        QMetaObject.connectSlotsByName(Categories)
     # setupUi
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.add_category.setText(QCoreApplication.translate("Form", u"+", None))
+    def retranslateUi(self, Categories):
+        Categories.setWindowTitle(QCoreApplication.translate("Categories", u"Categories", None))
+        self.add_category.setText(QCoreApplication.translate("Categories", u"+", None))
     # retranslateUi
 

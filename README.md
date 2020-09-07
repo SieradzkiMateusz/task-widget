@@ -16,8 +16,12 @@ First time working with qt/pyside2.
 - Deployment
 
 ## TODO
-- Edit category window ui []
-- Show 'edit category' window on click []
+- Edit category window ui [x]
+- Show 'edit category' window on click [x]
 - Edit category functionality []
 - Add new category functionality []
-- Select category in task add window []
+- Add category select to 'add task' window [x]
+- Category select functionality []
+
+## BUGS
+- main.py -> showCategories: clicked.connect applies to all buttons instead of one
