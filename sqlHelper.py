@@ -60,6 +60,7 @@ class SqlTaskModel(QSqlTableModel):
         # Add new record to the table
         new_record = self.record()
         new_record.setValue("title", data['title'])
+        new_record.setValue("cat_id", data['catID'])
         new_record.setValue("status", 0)
 
         if not self.insertRecord(self.rowCount(), new_record):

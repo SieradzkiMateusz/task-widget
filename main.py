@@ -14,30 +14,33 @@ from functools import partial
 class taskDialog(Ui_AddTask, QDialog):
     def __init__(self, *args, **kwargs):
         super(taskDialog, self).__init__(*args, **kwargs)
+
+        # Category dict to store category_id
+        self.catDict = {}
         
         # UI setup
         self.ui = Ui_AddTask()
         self.ui.setupUi(self)
+        self.setupCategoryList()
 
         self.ui.buttonBox.accepted.connect(self.addTask)
 
     def addTask(self):
-        # Input validation
-        rx = QRegExp("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$")
-        validator = QRegExpValidator(rx, self)
-        self.ui.taskName.setValidator(validator)
+        task = self.ui.taskName.text()
+        catName = self.ui.selectCategory.currentText()
+        catID = self.catDict[catName]
+        data = {
+            'title': task,
+            'catID': catID
+        }
 
-        if self.ui.taskName.hasAcceptableInput():
-            task = self.ui.taskName.text()
-            task = task.split('\n', 1)[0]
-
-            # Database code
-            data = {'title': task}
-
-            sql_task_model.insert(data)
-        else:
-            flags = QMessageBox.Close
-            result = QMessageBox.warning(self, "Error", "Invalid input!", flags)
+        sql_task_model.insert(data)
+    
+    def setupCategoryList(self):
+        categories = sql_category_model.getCategories()
+        for category in categories:
+            self.ui.selectCategory.addItem(category['title'])
+            self.catDict[category['title']] = category['catID']
 
 
 class categoryEdit(Ui_CategoryEdit, QDialog):
@@ -88,11 +91,17 @@ class categoryAdd(Ui_CategoryAdd, QDialog):
 
     def addCategory(self):
         title = self.ui.catName.text()
+        existing = sql_category_model.getCategories()
+        print(existing)
+        for category in existing:
+            if title in category.values():
+                flags = QMessageBox.Ok
+                result = QMessageBox.critical(self, "Error", "Category already exists!", flags)
+                return
         data = {
             'title': title,
             'color': self.color
         }
-        print(f"DEBUG: {data['title']} {data['color']}")
         if title:
             sql_category_model.insert(data)
     

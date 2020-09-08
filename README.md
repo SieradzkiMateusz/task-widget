@@ -10,7 +10,7 @@ First time working with qt/pyside2.
 ## Roadmap
 - Task input validation [x]
 - Add database support [x]
-- Add categories
+- Add categories [x]
 - Task duration / deadline
 - UX/UI Improvements
 - Deployment
@@ -24,4 +24,5 @@ First time working with qt/pyside2.
 - Delete category [x]
 - Add 'new category' functionality [x]
 - Add 'category select' list to 'add task' window [x]
-- Category select functionality []
+- Category select functionality [x]
+- Don't allow adding categories of the same name [x]
