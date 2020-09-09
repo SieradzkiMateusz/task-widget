@@ -15,7 +15,7 @@ class taskDialog(Ui_AddTask, QDialog):
     def __init__(self, *args, **kwargs):
         super(taskDialog, self).__init__(*args, **kwargs)
 
-        # Category dict to store category_id
+        # Category dict to store category id
         self.catDict = {}
         
         # UI setup
@@ -27,6 +27,8 @@ class taskDialog(Ui_AddTask, QDialog):
 
     def addTask(self):
         task = self.ui.taskName.text()
+        if not task:
+            return
         catName = self.ui.selectCategory.currentText()
         catID = self.catDict[catName]
         data = {
@@ -92,7 +94,6 @@ class categoryAdd(Ui_CategoryAdd, QDialog):
     def addCategory(self):
         title = self.ui.catName.text()
         existing = sql_category_model.getCategories()
-        print(existing)
         for category in existing:
             if title in category.values():
                 flags = QMessageBox.Ok
@@ -120,6 +121,9 @@ class categoryWindow(Ui_Categories, QWidget):
         self.ui = Ui_Categories()
         self.ui.setupUi(self)
         self.showCategories()
+
+        # Set position below main widget
+        self.move(900, 150)
         
         self.ui.add_category.clicked.connect(self.showAddCategory)
 
@@ -177,6 +181,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.setWindowTitle("Task Widget")
         self.updateTaskLabel()
+        self.setBackground()
         
         # Set position on screen
         self.move(900, 0)
@@ -197,17 +202,28 @@ class MainWindow(QMainWindow):
         self.updateTaskLabel()
 
     def updateTaskLabel(self):
-        _, firstTask = sql_task_model.getTask()
+        data = sql_task_model.getTask()
+        firstTask = data['title']
         if firstTask:
             self.ui.task_name.setText(firstTask)
         else:
             self.ui.task_name.setText("No task")
+        self.setBackground()
 
     def completeTask(self):
-        taskID, _ = sql_task_model.getTask()
+        data = sql_task_model.getTask()
+        taskID = data['taskID']
         sql_task_model.updateTaskStatus(taskID)
         self.updateTaskLabel()
 
+    def setBackground(self):
+        if self.ui.task_name.text() != "No task":
+            data = sql_task_model.getTask()
+            catID = data['catID']
+            color = sql_category_model.getCategoryColor(catID)
+            self.ui.frame.setStyleSheet(f"background-color: {color};")
+        else:
+            self.ui.frame.setStyleSheet(f"background-color: white;")
 
 
 if __name__ == '__main__':

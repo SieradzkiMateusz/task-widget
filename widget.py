@@ -20,7 +20,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(324, 64)
+        MainWindow.resize(275, 72)
+        MainWindow.setMaximumSize(QSize(16777215, 100))
         MainWindow.setStyleSheet(u"")
         self.actionQuit = QAction(MainWindow)
         self.actionQuit.setObjectName(u"actionQuit")
@@ -32,7 +33,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setStyleSheet(u"")
+        self.frame.setStyleSheet(u"background-color: white;")
         self.frame.setFrameShape(QFrame.NoFrame)
         self.frame.setFrameShadow(QFrame.Plain)
         self.gridLayout_2 = QGridLayout(self.frame)
@@ -45,10 +46,26 @@ class Ui_MainWindow(object):
         self.add_task = QPushButton(self.frame)
         self.add_task.setObjectName(u"add_task")
         font = QFont()
-        font.setPointSize(7)
+        font.setFamily(u"Arial")
+        font.setBold(True)
+        font.setWeight(75)
         self.add_task.setFont(font)
+        self.add_task.setStyleSheet(u"*{\n"
+"	background-color:#45adc7;\n"
+"	border-radius:14px;\n"
+"	border:1px solid #198eab;\n"
+"	color:#ffffff;\n"
+"	font-family:Arial;\n"
+"	font-size:9px;\n"
+"	font-weight:bold;\n"
+"	padding:4px 6px;\n"
+"}\n"
+"*:hover{\n"
+"	background-color:#2aa0bd;\n"
+"}\n"
+"	")
 
-        self.gridLayout_2.addWidget(self.add_task, 0, 2, 2, 1)
+        self.gridLayout_2.addWidget(self.add_task, 0, 3, 2, 1)
 
         self.horizontalSpacer = QSpacerItem(202, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -57,14 +74,40 @@ class Ui_MainWindow(object):
         self.completed = QPushButton(self.frame)
         self.completed.setObjectName(u"completed")
         self.completed.setFont(font)
+        self.completed.setStyleSheet(u"*{\n"
+"	background-color:#44c767;\n"
+"	border-radius:14px;\n"
+"	border:1px solid #18ab29;\n"
+"	color:#ffffff;\n"
+"	font-family:Arial;\n"
+"	font-size:9px;\n"
+"	font-weight:bold;\n"
+"	padding:4px 6px;\n"
+"}\n"
+"*:hover{\n"
+"	background-color:#5cbf2a;\n"
+"}\n"
+"	")
 
-        self.gridLayout_2.addWidget(self.completed, 2, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.completed, 2, 3, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer, 3, 3, 1, 1)
 
         self.show_categories = QPushButton(self.frame)
         self.show_categories.setObjectName(u"show_categories")
         self.show_categories.setMaximumSize(QSize(15, 15))
+        self.show_categories.setStyleSheet(u"*{\n"
+"	background-color:#29272b;\n"
+"	color:#ffffff;\n"
+"}\n"
+"*:hover{\n"
+"	background-color:#3d3a40;\n"
+"}\n"
+"	")
 
-        self.gridLayout_2.addWidget(self.show_categories, 2, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.show_categories, 2, 2, 1, 1)
 
 
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
@@ -86,6 +129,6 @@ class Ui_MainWindow(object):
         self.task_name.setText(QCoreApplication.translate("MainWindow", u"No task", None))
         self.add_task.setText(QCoreApplication.translate("MainWindow", u"Add task", None))
         self.completed.setText(QCoreApplication.translate("MainWindow", u"Completed", None))
-        self.show_categories.setText(QCoreApplication.translate("MainWindow", u"V", None))
+        self.show_categories.setText(QCoreApplication.translate("MainWindow", u"\u2193", None))
     # retranslateUi
 

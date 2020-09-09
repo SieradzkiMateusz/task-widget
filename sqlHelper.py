@@ -77,8 +77,15 @@ class SqlTaskModel(QSqlTableModel):
 
         titleCol = rec.indexOf("title")
         idCol = rec.indexOf("task_id")
+        catIDCol = rec.indexOf("cat_id")
 
-        return q.value(idCol), q.value(titleCol)
+        data = {
+                'taskID': q.value(idCol),
+                'title': q.value(titleCol),
+                'catID': q.value(catIDCol)
+        }
+
+        return data
 
     def updateTaskStatus(self, taskID):
         # Set task status as completed
@@ -129,6 +136,13 @@ class SqlCategoryModel(QSqlTableModel):
             categories.append(category)
 
         return categories
+
+    def getCategoryColor(self, catID):
+        q = QSqlQuery(f"SELECT * FROM categories WHERE category_id={catID}")
+        q.first()
+        rec = q.record()
+        color = q.value(rec.indexOf("color"))
+        return color
 
     def updateCategory(self, catID, newTitle, newColor):
         query = QSqlQuery()
